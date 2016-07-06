@@ -61,7 +61,9 @@ void SerialBase::attach(void (*fptr)(void), IrqType type) {
 
 void SerialBase::_irq_handler(uint32_t id, SerialIrq irq_type) {
     SerialBase *handler = (SerialBase*)id;
-    handler->_irq[irq_type].call();
+    if (handler->_irq[irq_type]) {
+        handler->_irq[irq_type].call();
+    }
 }
 
 int SerialBase::_base_getc() {
